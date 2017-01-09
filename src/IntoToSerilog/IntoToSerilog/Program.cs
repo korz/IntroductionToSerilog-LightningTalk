@@ -1,6 +1,5 @@
 ﻿using System;
 using Serilog;
-using Serilog.Events;
 
 namespace IntoToSerilog
 {
@@ -8,10 +7,11 @@ namespace IntoToSerilog
     {
         static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.ColoredConsole()
-                .WriteTo.RollingFile("log.txt", LogEventLevel.Verbose)
+            ILogger logger = new LoggerConfiguration()
+                .ReadFrom.AppSettings()
                 .CreateLogger();
+
+            Log.Logger = logger;
 
             Log.Logger.Information("Starting application");
             var jobs = FakeJobRepository.GetJobs();
