@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using IntoToSerilog.Models;
+using Serilog;
 
 namespace IntoToSerilog
 {
@@ -10,13 +12,11 @@ namespace IntoToSerilog
         {
             foreach (var job in jobs)
             {
-                Process(job);
+                Log.Logger.Information($"Starting to process job {job.Id} - {job.Name}");
+                Thread.Sleep(1000);
+                Console.WriteLine(job.ToString());
+                Log.Logger.Information($"Finished processing job {job.Id} - {job.Name}");
             }
-        }
-
-        public static void Process(Job job)
-        {
-            Console.WriteLine(job.ToString());
         }
     }
 }
